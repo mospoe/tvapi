@@ -7,4 +7,6 @@ import (
 
 func main () {
   fmt.Println("main")
+  config := tvapi.NewConfig()
+  fmt.Println(*config)
 }

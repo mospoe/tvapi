@@ -1,1 +1,1 @@
-package tv-api
+package tvapi
