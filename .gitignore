@@ -2,3 +2,4 @@ sample
 *.swp*
 cmd/*
 !cmd/*.go
+test.sh
