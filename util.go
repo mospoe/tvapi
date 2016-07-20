@@ -70,3 +70,43 @@ func read_hash(file string) []Hash {
 
   return hash
 }
+
+func util_format (s string, delim string) string {
+  var tmp string
+  parts := make([]string, 0)
+  source := strings.ToLower(s)
+  for _, c := range source {
+    if (util_isan(c)) {
+      tmp += string(c)
+    } else if (len(tmp) > 0) {
+      parts = append(parts, tmp)
+      tmp = ""
+    }
+  }
+
+  if (len(tmp) > 0) {
+    parts = append(parts, tmp)
+  }
+
+  r := strings.Join(parts, delim)
+  return r
+}
+
+func util_isan(c rune) bool {
+  r := false
+  if (c >= rune('a') && c <= rune('z')) {
+    r = true
+  }
+
+  if (c >= rune('0') && c <= rune('9')) {
+    r = true
+  }
+
+  return r
+}
+
+func util_print (args ...interface{}) {
+  for _, v := range args {
+    fmt.Println(v)
+  }
+}

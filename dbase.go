@@ -5,7 +5,7 @@ import (
   "strconv"
 )
 
-type DbSeries struct {
+type DbEntry struct {
   api int64
   key string
   alias []string
@@ -13,7 +13,7 @@ type DbSeries struct {
 
 type Dbase struct {
   file *os.File
-  series []DbSeries
+  series []DbEntry
 }
 
 func NewDbase (file string) *Dbase {
@@ -36,10 +36,23 @@ func (d *Dbase) load (file string) {
   hash := read_hash(file)
   for _, e := range hash {
     api, _ := strconv.Atoi(e.val)
-    ds := DbSeries{int64(api), e.key, e.ext}
+    ds := DbEntry{int64(api), e.key, e.ext}
     ds.alias = append(ds.alias, ds.key)
     d.series = append(d.series, ds)
   }
+}
+
+func (d *Dbase) Search (k string) *DbEntry {
+  var e DbEntry
+  for _, entry := range d.series {
+    for _, alias := range entry.alias {
+      if alias == k {
+        e = entry
+        return &e
+      }
+    }
+  }
+  return &e
 }
 
 func (d *Dbase) Close () {
