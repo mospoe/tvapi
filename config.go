@@ -12,6 +12,7 @@ type Config struct {
   mode string // [copy, move]
 
   dbase string
+  video string
 
   source []string
 }
@@ -25,7 +26,31 @@ func NewConfig () *Config {
 }
 
 func (c *Config) UserConfig () {
-  c.dbase = "/home/mos/.local/tvapi.db"
+  conf := "$HOME/.config/tvapi.conf"
+  conf = os.ExpandEnv(conf)
+
+  o_conf, err := os.Open(conf)
+  defer o_conf.Close()
+  if err != nil {
+    handle_err(err, 1)
+  }
+  opts := read_hash(conf)
+  for _, hash := range opts {
+    hash.val = os.ExpandEnv(hash.val)
+
+    switch hash.key {
+    case "dbase":
+      c.dbase = hash.val
+    break
+    case "video":
+      c.video = hash.val
+    break
+    }
+  }
+
+  if c.dbase != "" && c.video != "" {
+    c.ready = true
+  }
 }
 
 func (c *Config) ProcessArgs () {
