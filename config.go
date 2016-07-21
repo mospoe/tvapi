@@ -9,7 +9,10 @@ type Config struct {
   ready bool
 
   method string // [episode, series]
-  mode string // [copy, move]
+
+  move bool
+  help bool
+  quiet bool
 
   dbase string
   video string
@@ -34,7 +37,7 @@ func (c *Config) UserConfig () {
   if err != nil {
     handle_err(err, 1)
   }
-  opts := read_hash(conf)
+  opts := util_hash(conf)
   for _, hash := range opts {
     hash.val = os.ExpandEnv(hash.val)
 
@@ -54,18 +57,23 @@ func (c *Config) UserConfig () {
 }
 
 func (c *Config) ProcessArgs () {
-  c.mode = "move"
+  c.move = true
+  c.quiet = false
+  c.help = false
+
   c.method = "episode"
 
   for _, arg := range os.Args[1:] {
     if arg[0] == '-' {
       switch arg[1] {
       case 'c':
-        c.mode = "copy"
+        c.move = false
       break
-
+      case 'q':
+        c.quiet = true
+      break;
       case 'h':
-        c.mode = "help"
+        c.help = true
       break
       }
     } else {

@@ -28,7 +28,7 @@ func handle_err(err error, exit int, args ...interface{}) {
   }
 }
 
-func read_hash(file string) []Hash {
+func util_hash(file string) []Hash {
   var hash []Hash
 
   o_file, err := os.Open(file)
@@ -71,7 +71,7 @@ func read_hash(file string) []Hash {
   return hash
 }
 
-func util_format (s string, delim string) string {
+func util_format (s string, obj string) string {
   var tmp string
   parts := make([]string, 0)
   source := strings.ToLower(s)
@@ -86,6 +86,22 @@ func util_format (s string, delim string) string {
 
   if (len(tmp) > 0) {
     parts = append(parts, tmp)
+  }
+
+  var delim string
+  if obj == "series" {
+    delim = "-"
+    if parts[0] == "the" {
+      parts = parts[1:]
+    }
+
+    if parts[len(parts) - 1] == "us" {
+      parts = parts[0:len(parts) - 1]
+    }
+  }
+
+  if obj == "episode" {
+    delim = "."
   }
 
   r := strings.Join(parts, delim)

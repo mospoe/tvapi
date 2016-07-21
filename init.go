@@ -14,14 +14,21 @@ func Init() {
   dbase := NewDbase(config.dbase)
   switch config.method {
   case "episode":
-    fmt.Println("Method episode")
+    fmt.Println("method episode")
   break
   case "series":
     series := NewSeries(config.source[0], dbase)
-    if series.api > 0 {
-      fmt.Println("Found")
-    } else {
-      fmt.Println("No Joy :(")
+    if series.api == 0 && !config.quiet {
+      fmt.Println("search api for", series.key)
+      series.Api(dbase)
+    }
+
+    if !config.quiet {
+      if series.api > 0 {
+        fmt.Println("found", series.key, "with api id", series.api)
+      } else {
+        fmt.Println(series.key, "not found")
+      }
     }
   break
   }

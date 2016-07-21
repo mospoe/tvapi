@@ -33,7 +33,7 @@ func NewDbase (file string) *Dbase {
 }
 
 func (d *Dbase) load (file string) {
-  hash := read_hash(file)
+  hash := util_hash(file)
   for _, e := range hash {
     api, _ := strconv.Atoi(e.val)
     ds := DbEntry{int64(api), e.key, e.ext}
