@@ -11,10 +11,20 @@ func Init() {
     return
   }
 
+  if len(config.source) == 0 {
+    fmt.Println("nothing to do :(")
+    return
+  }
+
   dbase := NewDbase(config.dbase)
   switch config.method {
   case "episode":
-    fmt.Println("method episode")
+    for _, s := range config.source {
+      episode := NewEpisode(s, dbase)
+      if episode.title == "" {
+        fmt.Println(s, "not found")
+      }
+    }
   break
   case "series":
     series := NewSeries(config.source[0], dbase)
