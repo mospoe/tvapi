@@ -2,6 +2,8 @@ package tvapi
 
 import (
   "fmt"
+  "io/ioutil"
+  "net/http"
   "os"
   "strings"
 )
@@ -69,6 +71,27 @@ func util_hash(file string) []Hash {
   }
 
   return hash
+}
+
+func util_curl (url string) []byte {
+  url = "http://api.tvmaze.com/" + url
+  resp, err := http.Get(url)
+  if (err != nil) {
+    handle_err(err, 1)
+  }
+
+  defer resp.Body.Close()
+  if resp.StatusCode != 200 {
+    var raw []byte
+    return raw
+  }
+
+  raw, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    handle_err(err, 1)
+  }
+
+  return raw
 }
 
 func util_format (s string, obj string) string {

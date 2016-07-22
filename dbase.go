@@ -1,6 +1,7 @@
 package tvapi
 
 import (
+  "fmt"
   "os"
   "strconv"
 )
@@ -53,6 +54,24 @@ func (d *Dbase) Search (k string) *DbEntry {
     }
   }
   return &e
+}
+
+func (d *Dbase) Store (api int64, key string) {
+  e := DbEntry{api, key, []string{key}}
+  d.series = append(d.series, e)
+  line := fmt.Sprintf("%s %d\n", key, api)
+  info, err := d.file.Stat()
+  if err != nil {
+    fmt.Println("stat error " + key)
+    return
+  }
+
+  store := []byte(line)
+  wr, err := d.file.WriteAt(store, info.Size())
+  if err != nil || wr == 0 {
+    fmt.Println("write error" + key)
+    return
+  }
 }
 
 func (d *Dbase) Close () {
