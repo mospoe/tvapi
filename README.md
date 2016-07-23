@@ -41,12 +41,15 @@ Stores any result as "show-name show-api-id" in dbase
 
 ## Dbase Format:
 space delimited flat file
+
 show-alias is optional
-```
+
 show-name, show-api-id is minimum
+
+```
 show-name show-api-id show-alias show-alias
 ```
 
 ## Known Issues
-*cross device move will trigger error [use -c if conf.video is on diff device than source file]
-*paths are Unix/Linux, MS Windows unsupported
+* cross device move will trigger error [use -c if conf.video is on diff device than source file]
+* paths are Unix/Linux, MS Windows unsupported
