@@ -1,12 +1,11 @@
 ## test: 
-  go run cmd/main.go
+`go run cmd/main.go`
 
 ## make:
-  ./build.sh
-  creates cmd/tvapi
+creates cmd/tvapi
+`./build.sh`
 
 ## config:
-
 $HOME/.config/tvapi.conf
 example:
 ```
@@ -19,13 +18,9 @@ video $HOME/video
 default is to move to [$conf.video/show-name/show-name-season#/show-name-sNNeNN.api-title.ext]
     
 [no args] eg: tvapi
-
-
 Scans current directory for [mp4, mkv] files
 
 [filename] eg: tvapi show-name.sNNsEE.title.ext
-
-
 Search api and move to result
 
 [show-name] eg: tvapi show-name
@@ -41,11 +36,8 @@ Stores any result as "show-name show-api-id" in dbase
 
 ## Dbase Format:
 space delimited flat file
-
 show-alias is optional
-
 show-name, show-api-id is minimum
-
 ```
 show-name show-api-id show-alias show-alias
 ```
