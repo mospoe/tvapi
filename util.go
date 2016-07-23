@@ -117,10 +117,6 @@ func util_format (s string, obj string) string {
     if parts[0] == "the" {
       parts = parts[1:]
     }
-
-    if parts[len(parts) - 1] == "us" {
-      parts = parts[0:len(parts) - 1]
-    }
   }
 
   if obj == "episode" {

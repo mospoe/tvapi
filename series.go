@@ -11,11 +11,14 @@ type Series struct {
   source string
 }
 
-func NewSeries (source string, dbase *Dbase) *Series {
+func NewSeries (source string, dbase *Dbase, config *Config) *Series {
   var s Series
   s.source = source
   s.key = util_format(source, "series")
   s.Populate(dbase)
+  if s.api == 0 && !config.quiet {
+    s.Api(dbase)
+  }
   return &s
 }
 
@@ -28,6 +31,7 @@ func (s *Series) Populate (dbase *Dbase) {
 }
 
 func (s *Series) Api (dbase *Dbase) {
+  fmt.Println("searh api for", s.key)
   url := fmt.Sprintf("search/shows?q=%s", s.source)
   raw := util_curl(url)
 

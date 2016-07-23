@@ -41,12 +41,14 @@ func (c *Config) UserConfig () {
   for _, hash := range opts {
     hash.val = os.ExpandEnv(hash.val)
 
+    // TODO validate dbase and video
     switch hash.key {
     case "dbase":
       c.dbase = hash.val
     break
     case "video":
       c.video = hash.val
+      c.video = strings.TrimRight(c.video, "/")
     break
     }
   }
@@ -121,3 +123,4 @@ func (c *Config) ScanSource () {
     }
   }
 }
+

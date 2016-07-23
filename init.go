@@ -20,18 +20,14 @@ func Init() {
   switch config.method {
   case "episode":
     for _, s := range config.source {
-      episode := NewEpisode(s, dbase)
-      if episode.title == "" {
+      episode := NewEpisode(s, dbase, config)
+      if episode.title == "" && !config.quiet {
         fmt.Println(s, "not found")
       }
     }
   break
   case "series":
-    series := NewSeries(config.source[0], dbase)
-    if series.api == 0 && !config.quiet {
-      fmt.Println("search api for", series.key)
-      series.Api(dbase)
-    }
+    series := NewSeries(config.source[0], dbase, config)
 
     if !config.quiet {
       if series.api > 0 {
