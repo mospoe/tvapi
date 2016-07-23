@@ -1,9 +1,13 @@
 ## test: 
-`go run cmd/main.go`
+```
+go run cmd/main.go
+```
 
 ## make:
 creates cmd/tvapi
-`./build.sh`
+```
+./build.sh
+```
 
 ## config:
 $HOME/.config/tvapi.conf
