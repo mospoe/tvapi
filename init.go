@@ -38,5 +38,6 @@ func Init() {
     }
   break
   }
+
   dbase.Close()
 }
